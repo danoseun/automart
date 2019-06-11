@@ -1,6 +1,8 @@
 import { UserController } from './user';
+import { CarController } from './car';
 
 
 export {
-  UserController
+  UserController,
+  CarController
 };
