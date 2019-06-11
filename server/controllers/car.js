@@ -58,4 +58,19 @@ export class CarController {
       data: foundCar
     });
   }
+
+  /**
+  * Fetch All posted Ads (Admin)
+  * @static
+  * @param {object} req - The request object
+  * @param {object} res - The response object
+  * @return {object} JSON object representing success
+  * @memeberof CarController
+  */
+  static fetchAllCarAds(req, res) {
+    return res.status(200).json({
+      status: 200,
+      data: cars
+    });
+  }
 }

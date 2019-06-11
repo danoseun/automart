@@ -211,5 +211,25 @@ describe('Test for Cars routes', () => {
       expect(res.body.status).to.equal(404);
       expect(res.body.error).to.equal('Car not found');
     });
+
+    it('Should fetch all car ads n the db and return 200 status code', async () => {
+      const res = await chai.request(app)
+        .get('/api/v1/car')
+        .set('authorization', adminToken);
+      res.should.have.status(200);
+      res.body.should.be.an('object');
+      expect(res.body.status).to.equal(200);
+      expect(res.body.data).to.be.an('array');
+    });
+
+    it('Should return 401 status code not serve all Ads for non-admin', async () => {
+      const res = await chai.request(app)
+        .get('/api/v1/car')
+        .set('authorization', userClaim);
+      res.should.have.status(401);
+      res.body.should.be.an('object');
+      expect(res.body.status).to.equal(401);
+      expect(res.body.error).to.be.equal('Permission denied');
+    });
   });
 });
