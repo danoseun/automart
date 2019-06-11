@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../app';
 
-import { validRegisterData, inValidRegisterData } from './mockData/user';
+import { validRegisterData, inValidRegisterData, inValidLoginData } from './mockData/user';
 import { users } from '../dummyDb';
 
 const { should, expect } = chai;
@@ -11,6 +11,7 @@ should();
 chai.use(chaiHttp);
 
 const url = '/api/v1/auth/register';
+const loginUrl = '/api/v1/auth/login';
 
 describe('Test for user route', () => {
   describe('Test for register API', () => {
@@ -182,6 +183,64 @@ describe('Test for user route', () => {
       res.body.should.have.property('error');
       expect(res.body.status).to.equal(400);
       expect(res.body.error).to.be.an('object');
+    });
+  });
+
+  describe('Test for login API', () => {
+    it('Should return 200 status code and log user in when correctdetails are supplied', async () => {
+      const newLength = users.length;
+      const res = await chai.request(app)
+        .post(loginUrl)
+        .send(validRegisterData[0]);
+      res.should.have.status(200);
+      res.body.should.be.an('object');
+      expect(res.body.status).to.equal(200);
+      expect(res.body.data).to.be.a('object');
+      expect(users).to.have.length(newLength);
+    });
+    it('Should return 400 status code and error message when email is not supplied/empty', async () => {
+      const res = await chai.request(app)
+        .post(loginUrl)
+        .send(inValidLoginData[0]);
+      res.should.have.status(400);
+      res.body.should.be.an('object');
+      res.body.should.have.property('status');
+      res.body.should.have.property('error');
+      expect(res.body.status).to.equal(400);
+      expect(res.body.error).to.be.an('object');
+    });
+    it('Should return 401 status code and error message when email is not found in the db', async () => {
+      const res = await chai.request(app)
+        .post(loginUrl)
+        .send(inValidLoginData[1]);
+      res.should.have.status(401);
+      res.body.should.be.an('object');
+      res.body.should.have.property('status');
+      res.body.should.have.property('error');
+      expect(res.body.status).to.equal(401);
+      expect(res.body.error).to.equal('Authentication failed');
+    });
+    it('Should return 400 status code and error message when correct email is supplied but password is empty/undefined', async () => {
+      const res = await chai.request(app)
+        .post(loginUrl)
+        .send(inValidLoginData[2]);
+      res.should.have.status(400);
+      res.body.should.be.an('object');
+      res.body.should.have.property('status');
+      res.body.should.have.property('error');
+      expect(res.body.status).to.equal(400);
+      expect(res.body.error).to.be.an('object');
+    });
+    it('Should return 401 status code and error message when correct email is supplied but password is not found in the db', async () => {
+      const res = await chai.request(app)
+        .post(loginUrl)
+        .send(inValidLoginData[3]);
+      res.should.have.status(401);
+      res.body.should.be.an('object');
+      res.body.should.have.property('status');
+      res.body.should.have.property('error');
+      expect(res.body.status).to.equal(401);
+      expect(res.body.error).to.equal('Incorrect login details');
     });
   });
 });
