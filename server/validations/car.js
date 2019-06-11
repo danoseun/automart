@@ -128,4 +128,25 @@ export class CarValidator {
     req.body.bodytype = bodytype.toLowerCase();
     return next();
   }
+
+  /**
+   * Fetch Specific Car On to the application
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {function} next - Calls the next function/route handler
+   * @returns {object} JSON representing the failure message.
+   */
+  static findSpecificCarAd(req, res, next) {
+    const { id } = req.params;
+    const value = Number(id);
+    const foundCar = cars.find(car => car.id === value);
+    if (!foundCar) {
+      return res.status(404).json({
+        status: 404,
+        error: 'Car not found'
+      });
+    }
+    req.body.foundCar = foundCar;
+    return next();
+  }
 }
