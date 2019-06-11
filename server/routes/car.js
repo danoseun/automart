@@ -1,9 +1,9 @@
 import express from 'express';
 import { CarController } from '../controllers';
 import { CarValidator } from '../validations';
-import { verifyToken } from '../middlewares/auth';
+import { verifyToken, isAdminDummy } from '../middlewares/auth';
 
-const { postCarAd, getSingleCarAd } = CarController;
+const { postCarAd, getSingleCarAd, fetchAllCarAds } = CarController;
 const { postAdchecker, findSpecificCarAd } = CarValidator;
 
 export const carRouter = express.Router();
@@ -11,3 +11,4 @@ export const carRouter = express.Router();
 
 carRouter.post('/car', verifyToken, postAdchecker, postCarAd);
 carRouter.get('/car/:id', findSpecificCarAd, getSingleCarAd);
+carRouter.get('/car', verifyToken, isAdminDummy, fetchAllCarAds);
