@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { cars, users } from '../dummyDb';
 
 
@@ -108,6 +109,38 @@ export class CarController {
       });
     }
     foundCar.status = 'sold';
+    return res.status(200).json({
+      status: 200,
+      data: foundCar
+    });
+  }
+
+  /**
+  * Edit price of posted Ad
+  * @static
+  * @param {object} req - The request object
+  * @param {object} res - The response object
+  * @return {object} JSON object representing success
+  * @memeberof CarController
+  */
+  static editAdPrice(req, res) {
+    let { price, foundCar } = req.body;
+    if (!price) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Enter a price or retain the old price'
+      });
+    }
+    if (price) {
+      price = price.trim();
+      if (!/^\d+$/.test(price)) {
+        return res.status(400).json({
+          status: 400,
+          error: 'Price should be only a string of numbers'
+        });
+      }
+    }
+    foundCar.price = price;
     return res.status(200).json({
       status: 200,
       data: foundCar
