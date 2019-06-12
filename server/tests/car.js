@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import app from '../../app';
 
 import { validCarData, invalidCarData } from './mockData/car';
-import { users, cars } from '../dummyDb';
+import { cars } from '../dummyDb';
 
 const { should, expect } = chai;
 should();
