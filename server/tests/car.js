@@ -212,10 +212,20 @@ describe('Test for Cars routes', () => {
       expect(res.body.error).to.equal('Car not found');
     });
 
-    it('Should fetch all car ads n the db and return 200 status code', async () => {
+    it('Should fetch all car ads in the db and return 200 status code', async () => {
       const res = await chai.request(app)
         .get('/api/v1/car')
         .set('authorization', adminToken);
+      res.should.have.status(200);
+      res.body.should.be.an('object');
+      expect(res.body.status).to.equal(200);
+      expect(res.body.data).to.be.an('array');
+    });
+
+    // req.query
+    it('Should fetch all unsold car ads in the db and return 200 status code', async () => {
+      const res = await chai.request(app)
+        .get('/api/v1/car?status=unsold');
       res.should.have.status(200);
       res.body.should.be.an('object');
       expect(res.body.status).to.equal(200);

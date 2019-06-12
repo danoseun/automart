@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable prefer-const */
 import { cars, users } from '../dummyDb';
 
@@ -145,5 +146,41 @@ export class CarController {
       status: 200,
       data: foundCar
     });
+  }
+
+  /**
+   * Filter by unsold/available and price range of cars
+   * @static
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} JSON object representing success
+   * @param {function} next - Calls the next function/route handler
+   * @memeberof CarController
+   */
+  static filterSearch(req, res, next) {
+    if (req.query.status) {
+      let { status } = req.query;
+      status = status.trim().toLowerCase();
+      if (status) {
+        const statusResult = cars.filter(car => car.status === status);
+        if (statusResult.length === 0) {
+          return res.status(404).json({
+            status: 404,
+            error: 'Sorry, this does not exist'
+          });
+        }
+        return res.status(200).json({
+          status: 200,
+          data: statusResult
+        });
+      }
+
+
+      return res.status(404).json({
+        status: 404,
+        error: 'There seems to be an issue with your search'
+      });
+    }
+    next();
   }
 }
