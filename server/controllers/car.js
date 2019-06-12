@@ -90,4 +90,27 @@ export class CarController {
       data: 'Car Ad successfully deleted'
     });
   }
+
+  /**
+   * Edit status of posted Ad
+   * @static
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} JSON object representing success
+   * @memeberof CarController
+   */
+  static editAdStatus(req, res) {
+    const { foundCar } = req.body;
+    if (foundCar.status === 'sold') {
+      return res.status(422).json({
+        status: 422,
+        error: 'This ad has already been marked as sold'
+      });
+    }
+    foundCar.status = 'sold';
+    return res.status(200).json({
+      status: 200,
+      data: foundCar
+    });
+  }
 }
