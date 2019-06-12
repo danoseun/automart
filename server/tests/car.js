@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import app from '../../app';
 
 import { validCarData, invalidCarData } from './mockData/car';
-import { users, cars } from '../dummyDb';
+import { cars } from '../dummyDb';
 
 const { should, expect } = chai;
 should();
@@ -212,7 +212,7 @@ describe('Test for Cars routes', () => {
       expect(res.body.error).to.equal('Car not found');
     });
 
-    it('Should fetch all car ads n the db and return 200 status code', async () => {
+    it('Should fetch all car ads in the db and return 200 status code', async () => {
       const res = await chai.request(app)
         .get('/api/v1/car')
         .set('authorization', adminToken);
@@ -220,6 +220,26 @@ describe('Test for Cars routes', () => {
       res.body.should.be.an('object');
       expect(res.body.status).to.equal(200);
       expect(res.body.data).to.be.an('array');
+    });
+
+    // req.query?status=unsold
+    it('Should fetch all unsold car ads in the db and return 200 status code', async () => {
+      const res = await chai.request(app)
+        .get('/api/v1/car?status=unsold');
+      res.should.have.status(200);
+      res.body.should.be.an('object');
+      expect(res.body.status).to.equal(200);
+      expect(res.body.data).to.be.an('array');
+    });
+
+    // req.query?status=qui
+    it('Should not fetch all unsold car ads in the db and return 404 status code', async () => {
+      const res = await chai.request(app)
+        .get('/api/v1/car?status=qui');
+      res.should.have.status(404);
+      res.body.should.be.an('object');
+      expect(res.body.status).to.equal(404);
+      expect(res.body.error).to.be.equal('Sorry, this does not exist');
     });
 
     it('Should return 401 status code not serve all Ads for non-admin', async () => {
@@ -283,6 +303,16 @@ describe('Test for Cars routes', () => {
       res.body.should.be.an('object');
       expect(res.body.status).to.equal(400);
       expect(res.body.error).to.be.equal('Enter a price or retain the old price');
+    });
+    it('Should not allow owner update car ad price and return status code of 400', async () => {
+      const res = await chai.request(app)
+        .patch('/api/v1/car/2/price')
+        .set('authorization', ownerClaim)
+        .send({ price: 'a3000pq' });
+      res.should.have.status(400);
+      res.body.should.be.an('object');
+      expect(res.body.status).to.equal(400);
+      expect(res.body.error).to.be.equal('Price should be only a string of numbers');
     });
   });
 });
