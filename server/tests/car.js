@@ -232,4 +232,16 @@ describe('Test for Cars routes', () => {
       expect(res.body.error).to.be.equal('Permission denied');
     });
   });
+
+  describe('Test for DELETE endpoint', () => {
+    it('Should allow admin delete a resource and return status code of 200', async () => {
+      const res = await chai.request(app)
+        .delete('/api/v1/car/3')
+        .set('authorization', adminToken);
+      res.should.have.status(200);
+      res.body.should.be.an('object');
+      expect(res.body.status).to.equal(200);
+      expect(res.body.data).to.be.equal('Car Ad successfully deleted');
+    });
+  });
 });
