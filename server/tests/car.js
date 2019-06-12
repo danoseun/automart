@@ -242,6 +242,26 @@ describe('Test for Cars routes', () => {
       expect(res.body.error).to.be.equal('Sorry, this does not exist');
     });
 
+    // req.query?status=unsold&minprice&maxprice
+    it('Should fetch all unsold cars ads by status&price range in the db and return 200 status code', async () => {
+      const res = await chai.request(app)
+        .get('/api/v1/car?status=unsold&minprice=15000000&maxprice=30000000');
+      res.should.have.status(200);
+      res.body.should.be.an('object');
+      expect(res.body.status).to.equal(200);
+      expect(res.body.data).to.be.an('array');
+    });
+
+    // req.query?status=unsold&minprice&maxprice(2)
+    it('Should not fetch all unsold cars ads by status&price range in the db and return 404 status code', async () => {
+      const res = await chai.request(app)
+        .get('/api/v1/car?status=unsold&minprice=15&maxprice=30');
+      res.should.have.status(404);
+      res.body.should.be.an('object');
+      expect(res.body.status).to.equal(404);
+      expect(res.body.error).to.be.equal('There is no result for your search now');
+    });
+
     it('Should return 401 status code not serve all Ads for non-admin', async () => {
       const res = await chai.request(app)
         .get('/api/v1/car')
