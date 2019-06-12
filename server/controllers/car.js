@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable prefer-const */
-import { cars, users } from '../dummyDb';
+import { cars } from '../dummyDb';
 
 
 /**
