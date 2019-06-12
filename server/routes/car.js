@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import express from 'express';
 import { CarController } from '../controllers';
 import { CarValidator } from '../validations';
