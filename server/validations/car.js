@@ -2,8 +2,8 @@
 import { cars } from '../dummyDb';
 
 /**
- * Class representing user validations
- * @class Car
+ * Class representing Car validations
+ * @class CarValidator
  */
 export class CarValidator {
   /**
