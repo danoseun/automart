@@ -69,7 +69,7 @@ Access API documentation through this link [Here](https://oluwaseunsomefun.docs.
 * Project is currently being managed with Pivotal Tracker, a project management tool. You can find the stories [Here](https://www.pivotaltracker.com/n/projects/2348960)
 
 ## Base URL
-* The project's base URL can be acessed by clicking on this link [Here](http)
+* The project's base URL can be acessed by clicking on this link [Here](https://automart-45.herokuapp.com/api/v1)
 
 ## Running the tests
 * Run the test with the command  
