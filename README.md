@@ -78,6 +78,7 @@ Access API documentation through this link [Here](https://oluwaseunsomefun.docs.
 HTML  
 CSS  
 Express/Nodejs
+Vanilla JS
 
 ## Authors
 * Oluwaseun Somefun
