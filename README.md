@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/danoseun/automart.svg?branch=develop)](https://travis-ci.org/danoseun/automart)
+[![Coverage Status](https://coveralls.io/repos/github/danoseun/automart/badge.svg?branch=develop)](https://coveralls.io/github/danoseun/automart?branch=develop)
 
 
 
