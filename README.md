@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/danoseun/automart.svg?branch=develop)](https://travis-ci.org/danoseun/automart)
 [![Coverage Status](https://coveralls.io/repos/github/danoseun/automart/badge.svg?branch=develop)](https://coveralls.io/github/danoseun/automart?branch=develop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/dbdbf958e2d014cc156f/maintainability)](https://codeclimate.com/github/danoseun/automart/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/dbdbf958e2d014cc156f/test_coverage)](https://codeclimate.com/github/danoseun/automart/test_coverage)
 
 
 
