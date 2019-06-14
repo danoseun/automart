@@ -63,7 +63,7 @@ If you change the port in your .env file then use the port instead of the one ab
 * User can view all new unsold cars.
 
 ## API Documentation
-Access API documentation through this link [Here](https://oluwaseunsomefun.docs.apiary.io/)
+Access API documentation through this link [Here](https://automart13.docs.apiary.io/#)
 
 ## Pivotal Tracker
 * Project is currently being managed with Pivotal Tracker, a project management tool. You can find the stories [Here](https://www.pivotaltracker.com/n/projects/2348960)
