@@ -12,18 +12,18 @@ export class OrderValidator {
     * @returns {object} JSON representing the failure message
     */
   static postOrderChecker(req, res, next) {
-    let { priceOffered } = req.body;
+    const { amount } = req.body;
     const errors = [];
 
-    priceOffered = priceOffered.trim();
-    if (!priceOffered) {
+    // amount = amount.trim();
+    if (!amount) {
       const error = {
         message: 'please specify an amount'
       };
       errors.push(error);
     }
 
-    if (!/^\d+$/.test(priceOffered)) {
+    if (!/^\d+$/.test(amount)) {
       const error = {
         message: 'price offered should be numbers only'
       };
@@ -39,7 +39,7 @@ export class OrderValidator {
       });
     }
 
-    req.body.priceOffered = priceOffered;
+    req.body.amount = amount;
     next();
   }
 }

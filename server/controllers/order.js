@@ -1,6 +1,10 @@
+/* eslint-disable no-shadow */
+/* eslint-disable camelcase */
 /* eslint-disable prefer-destructuring */
-import { users, cars, orders } from '../dummyDb';
-
+import pool from '../config/config';
+import {
+  postOrderQuery, findOrderQuery, updateOrderQuery, allUserOrdersQuery, fetchSingleCarAdQuery
+} from '../config/sql';
 /**
  * Class representing CarController
  * @class OrderController
@@ -14,35 +18,53 @@ export class OrderController {
    * @return {object} JSON object representing success
    * @memeberof OrderController
    */
-  static postOrder(req, res) {
-    const { priceOffered, carId, status = 'pending' } = req.body;
+  static async postOrder(req, res) {
+    const { car_id, amount } = req.body;
+    const buyer = req.authData.payload.id;
+    const value = Number(car_id);
 
-    const id = orders[orders.length - 1].id + 1;
-    const createdon = new Date();
-    const foundCar = cars.find(car => car.id === Number(carId));
-    if (!foundCar) {
-      res.status(404).json({
-        status: 404,
-        error: 'Car does not exist'
+    // user should not be able to buy car/Ad he/she posted
+    try {
+      const { rows, rowCount } = await pool.query(fetchSingleCarAdQuery, [value]);
+      if (rowCount === 0) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Invalid car id'
+        });
+      }
+      // if (rows[0].owner === buyer) {
+      //   return res.status(401).json({
+      //     status: 401,
+      //     error: 'You can not order for a car you posted'
+      //   });
+      // }
+      const result = await pool.query(postOrderQuery, [buyer, value, amount]);
+      if (result.rowCount !== 0) {
+        const price = rows[0].price;
+        const {
+          // eslint-disable-next-line no-shadow
+          // eslint-disable-next-line no-unused-vars
+          id, buyer_id, car_id, amount, status, created_on
+        } = result.rows[0];
+
+        return res.status(201).json({
+          status: 201,
+          data: {
+            id,
+            car_id,
+            created_on,
+            status,
+            price,
+            amount
+          }
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: error.message
       });
     }
-    const carIndex = foundCar.id;
-    const price = foundCar.price;
-
-    const newOrder = {
-      id,
-      carIndex,
-      createdon,
-      status,
-      price,
-      priceOffered
-    };
-
-    orders.push(newOrder);
-    return res.status(201).json({
-      status: 201,
-      data: { newOrder }
-    });
   }
 
 
@@ -54,50 +76,58 @@ export class OrderController {
    * @return {object} JSON object representing success
    * @memeberof OrderController
    */
-  static editOrderPrice(req, res) {
-    const { newPriceOffered } = req.body;
-
-    if (!newPriceOffered.trim() === '' || !/^\d+$/.test(newPriceOffered)) {
+  static async editOrderPrice(req, res) {
+    const { price } = req.body;
+    let new_price_offered;
+    let old_price_offered;
+    if (!price || !/^\d+$/.test(price)) {
       return res.status(400).json({
         status: 400,
         error: 'new price offered should be numbers only'
       });
     }
 
-    let oldPriceOffered, id, carId, status;
-    const { orderId } = req.params;
-    const { email } = req.authData.payload;
-    const foundUser = users.find(user => user.email === email);
-    const userId = foundUser.id;
-    const foundOrder = orders.find(order => order.id === Number(orderId) && order.buyerId === userId);
 
-    if (!foundOrder) {
-      return res.status(404).json({
-        status: 404,
-        error: 'Order is not available'
+    const value = Number(req.params.orderId);
+    const { id } = req.authData.payload;
+    try {
+      const { rows, rowCount } = await pool.query(findOrderQuery, [value, id]);
+      if (rowCount === 0) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Order does not exist'
+        });
+      }
+      old_price_offered = rows[0].amount;
+      if (rowCount !== 0 && rows[0].status !== 'pending') {
+        return res.status(422).json({
+          status: 422,
+          error: 'Sorry, this order is no longer pending'
+        });
+      }
+      if (rowCount !== 0 && rows[0].status === 'pending') {
+        const result = await pool.query(updateOrderQuery, [price, value, id]);
+        if (result.rowCount !== 0) {
+          const { id, car_id, status } = result.rows[0];
+          new_price_offered = price;
+
+          return res.status(200).json({
+            status: 200,
+            data: {
+              id,
+              car_id,
+              status,
+              old_price_offered,
+              new_price_offered
+            }
+          });
+        }
+      }
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: error.message
       });
     }
-    if (foundOrder && foundOrder.status === 'pending') {
-      oldPriceOffered = foundOrder.amount;
-
-      id = foundOrder.id;
-      carId = foundOrder.carId;
-      status = foundOrder.status;
-      const updatedOrder = {
-        id,
-        carId,
-        status,
-        oldPriceOffered,
-        newPriceOffered
-      };
-      return res.status(200).json({
-        status: 200,
-        data: updatedOrder
-      });
-    }
-    return res.status(422).json({
-      status: 422,
-      error: 'Sorry, this order is no longer pending'
-    });
   }
 }
