@@ -20,6 +20,7 @@ export class OrderController {
    */
   static async postOrder(req, res) {
     const { car_id, amount } = req.body;
+    console.log('>>>', req.body);
     const buyer = req.authData.payload.id;
     const value = Number(car_id);
 
@@ -39,8 +40,9 @@ export class OrderController {
       //   });
       // }
       const result = await pool.query(postOrderQuery, [buyer, value, amount]);
+      console.log('result', result.rows[0]);
       if (result.rowCount !== 0) {
-        const price = rows[0].price;
+        let price = rows[0].price;
         // eslint-disable-next-line no-shadow
           // eslint-disable-next-line no-unused-vars
         const {
