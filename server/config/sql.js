@@ -24,9 +24,9 @@ export const bodyTypeQuery = 'SELECT * FROM cars WHERE body_type = $1';
 export const statusStateQuery = 'SELECT * FROM cars WHERE status = $1 AND state = $2';
 
 /** Order Query */
-export const postOrderQuery = 'INSERT INTO orders (buyerid, carid, amount) VALUES ($1, $2, $3) returning *';
+export const postOrderQuery = 'INSERT INTO orders (buyerid, car_id, amount) VALUES ($1, $2, $3) returning *';
 export const findOrderQuery = 'SELECT * FROM orders WHERE id = $1 AND buyer_id = $2';
-export const updateOrderQuery = 'UPDATE orders SET amount = $1 WHERE id = $2 and buyerid = $3 returning *';
+export const updateOrderQuery = 'UPDATE orders SET amount = $1 WHERE id = $2 and buyer_id = $3 returning *';
 export const allUserOrdersQuery = 'SELECT * FROM orders WHERE buyer_id = $1';
 
 /** Flag Query */
