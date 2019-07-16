@@ -2,10 +2,11 @@
 import express from 'express';
 import { CarController } from '../controllers';
 import { CarValidator } from '../validations';
-import { verifyToken, isAdminDummy, isOwnerDummy } from '../middlewares/auth';
+import { verifyToken, isAdmin } from '../middlewares/auth';
 
 const {
-  postCarAd, getSingleCarAd, fetchAllCarAds, deleteSingleCarAd, editAdStatus, editAdPrice, filterSearch
+  // eslint-disable-next-line no-unused-vars
+  postCarAd, getSingleCarAd, fetchAllCarAds, fetchAllUserAds, deleteSingleCarAd, editAdStatus, editAdPrice, statusSearch, statusPriceSearch, statusNewStateSearch, statusUsedStateSearch, statusManufacturerSearch, bodyTypeSearch
 } = CarController;
 const { postAdchecker, findSpecificCarAd } = CarValidator;
 
@@ -14,7 +15,7 @@ export const carRouter = express.Router();
 
 carRouter.post('/car', verifyToken, postAdchecker, postCarAd);
 carRouter.get('/car/:id', findSpecificCarAd, getSingleCarAd);
-carRouter.get('/car', filterSearch, verifyToken, isAdminDummy, fetchAllCarAds);
-carRouter.delete('/car/:id', verifyToken, isAdminDummy, findSpecificCarAd, deleteSingleCarAd);
-carRouter.patch('/car/:id/status', verifyToken, isOwnerDummy, findSpecificCarAd, editAdStatus);
-carRouter.patch('/car/:id/price', verifyToken, isOwnerDummy, findSpecificCarAd, editAdPrice);
+carRouter.get('/car', statusPriceSearch, statusNewStateSearch, statusUsedStateSearch, statusManufacturerSearch, statusSearch, bodyTypeSearch, verifyToken, isAdmin, fetchAllCarAds);
+carRouter.delete('/car/:id', verifyToken, isAdmin, findSpecificCarAd, deleteSingleCarAd);
+carRouter.patch('/car/:id/status', verifyToken, findSpecificCarAd, editAdStatus);
+carRouter.patch('/car/:id/price', verifyToken, findSpecificCarAd, editAdPrice);

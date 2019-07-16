@@ -1,5 +1,14 @@
-import { users } from '../dummyDb';
+/* eslint-disable camelcase */
+import { hashSync, compareSync } from 'bcrypt';
+import pool from '../config/config';
 import { createToken } from '../middlewares/auth';
+// import { sendMail } from '../helpers/mail';
+// import  Crypter  from '../helpers/crypt';
+// const { encrypt, decrypt } = Crypter;
+import {
+  createUser, queryUsersByEmail, fetchAllUsersQuery, deleteUserQuery, updateUserRoleQuery
+} from '../config/sql';
+
 
 /**
  * Class representing UserController
@@ -14,24 +23,34 @@ export class UserController {
      * @return {object} JSON object representing success
      * @memeberof UserController
      */
-  static register(req, res) {
+  static async register(req, res) {
     const {
-      email, firstname, lastname, password, address
+      email, first_name, last_name, password, address
     } = req.body;
-    const newUser = {
-      id: users.length + 1,
+    const params = [
       email,
-      firstname,
-      lastname,
-      password,
+      first_name,
+      last_name,
+      hashSync(password, 10),
       address
-    };
-    users.push(newUser);
-    const token = createToken(newUser);
-    return res.status(201).json({
-      status: 201,
-      data: { token }
-    });
+    ];
+
+    try {
+      const { rows } = await pool.query(createUser, params);
+      if (rows) {
+        const authUser = rows[0];
+        const token = createToken(authUser);
+        return res.status(201).json({
+          status: 201,
+          data: { token }
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: error.message
+      });
+    }
   }
 
   /**
@@ -42,12 +61,35 @@ export class UserController {
      * @return {object} JSON object representing success
      * @memeberof UserController
      */
-  static login(req, res) {
-    const { userFound } = req.body;
-    const token = createToken(userFound);
-    return res.status(200).json({
-      status: 200,
-      data: { token }
-    });
+  static async login(req, res) {
+    const { email } = req.body;
+    const params = [email];
+    try {
+      const { rows } = await pool.query(queryUsersByEmail, params);
+      if (rows) {
+        if (rows[0]) {
+          const comparePassword = compareSync(req.body.password, rows[0].password);
+          if (comparePassword) {
+            const authUser = rows[0];
+            const token = createToken(authUser);
+            return res.status(200).json({
+              status: 200,
+              data: { token }
+            });
+          }
+          if (!comparePassword) {
+            return res.status(401).json({
+              status: 401,
+              error: 'Authentication failed'
+            });
+          }
+        }
+      }
+    } catch (error) {
+      res.status(500).json({
+        status: 500,
+        error: error.message
+      });
+    }
   }
 }

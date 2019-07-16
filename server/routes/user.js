@@ -7,5 +7,5 @@ const { registerCheck, loginCheck } = UserValidator;
 
 export const userRouter = express.Router();
 
-userRouter.post('/auth/register', registerCheck, register);
-userRouter.post('/auth/login', loginCheck, login);
+userRouter.post('/auth/signup', registerCheck, register);
+userRouter.post('/auth/signin', loginCheck, login);

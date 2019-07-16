@@ -2,33 +2,33 @@
 export const validRegisterData = [
   {
     email: 'iknagod@gmail.com',
-    firstname: 'Ikenna',
-    lastname: 'James',
+    first_name: 'Ikenna',
+    last_name: 'James',
     password: 'jamespass',
     address: '14 ketu street,Lagos'
   },
   {
     email: 'processenv@gmail.com',
-    firstname: 'Process',
-    lastname: 'Talktrue',
+    first_name: 'Process',
+    last_name: 'Talktrue',
     password: 'jamespass',
     address: '15, onikolobo street, GRA, Abeokuta'
   },
   {
-    email: 'admin@gmail.com',
-    firstname: 'Process',
-    lastname: 'Talktrue',
+    email: 'wakil@gmail.com',
+    first_name: 'Process',
+    last_name: 'Talktrue',
     password: 'adminpass',
     address: '15, onikolobo street, GRA, Abeokuta',
-    isAdmin: true
+    is_admin: true
   }
 ];
 
 export const inValidRegisterData = [
   // undefined email 0
   {
-    firstname: 'John',
-    lastname: 'James',
+    first_name: 'John',
+    last_name: 'James',
     password: 'jamespass',
     address: 'jamespass'
   },
@@ -36,8 +36,8 @@ export const inValidRegisterData = [
   // spaced email 1
   {
     email: 'jja mes@gmail.com',
-    firstname: 'John',
-    lastname: 'James',
+    first_name: 'John',
+    last_name: 'James',
     password: 'jamespass',
     address: '12, joriondo street, Lagos'
   },
@@ -45,16 +45,16 @@ export const inValidRegisterData = [
   // invalid email format 2
   {
     email: 'jjamesgmail.com',
-    firstname: 'John',
-    lastname: 'James',
+    first_name: 'John',
+    last_name: 'James',
     password: 'jamespass',
     address: '23, rondle avenue, Lagos'
   },
   // Existing email 3
   {
     email: 'iknagod@gmail.com',
-    firstname: 'John',
-    lastname: 'James',
+    first_name: 'John',
+    last_name: 'James',
     password: 'jamespass',
     address: '23, randle street, Lagos'
   },
@@ -63,23 +63,23 @@ export const inValidRegisterData = [
   // undefined firstname 4
   {
     email: 'babnla@gmail.com',
-    lastname: 'James',
+    last_name: 'James',
     password: 'jamespass',
     address: '14 ketu street,Lagos'
   },
   // spaced firstname 5
   {
     email: 'donbabj@gmail.com',
-    firstname: 'Ike nna',
-    lastname: 'James',
+    first_name: 'Ike nna',
+    last_name: 'James',
     password: 'jamespass',
     address: '14 ketu street,Lagos'
   },
   // short firstname length 6
   {
     email: 'iknababa@gmail.com',
-    firstname: 'I',
-    lastname: 'James',
+    first_name: 'I',
+    last_name: 'James',
     password: 'jamespass',
     address: '14 ketu street,Lagos'
   },
@@ -88,15 +88,15 @@ export const inValidRegisterData = [
   // undefined lastname 7
   {
     email: 'jekyll@gmail.com',
-    firstname: 'Ikenna',
+    first_name: 'Ikenna',
     password: 'jamespass',
     address: '14 ketu street,Lagos'
   },
   // lastname space 8
   {
     email: 'jacintha@gmail.com',
-    firstname: 'Ikenna',
-    lastname: 'Jam es',
+    first_name: 'Ikenna',
+    last_name: 'Jam es',
     password: 'jamespass',
     address: '14 ketu street,Lagos'
   },
@@ -105,15 +105,15 @@ export const inValidRegisterData = [
   // undefined password 9
   {
     email: 'iknagod@gmail.com',
-    firstname: 'Ikenna',
-    lastname: 'James',
+    first_name: 'Ikenna',
+    last_name: 'James',
     address: '14 ketu street,Lagos'
   },
   // short password 10
   {
     email: 'seller@gmail.com',
-    firstname: 'Ikenna',
-    lastname: 'James',
+    first_name: 'Ikenna',
+    last_name: 'James',
     password: 'js',
     address: '14 ketu street,Lagos'
   },
@@ -121,8 +121,8 @@ export const inValidRegisterData = [
   // undefined address 11
   {
     email: 'iknagod@gmail.com',
-    firstname: 'Ikenna',
-    lastname: 'James',
+    first_name: 'Ikenna',
+    last_name: 'James',
     password: 'Kembewoi'
   }
 ];

@@ -5,8 +5,8 @@ export const validCarData = [
     price: '10000000',
     manufacturer: 'Kia',
     model: 'Dehydra',
-    bodytype: 'car',
-    imageurl: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    body_type: 'car',
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
   },
   {
     state: 'used',
@@ -14,8 +14,8 @@ export const validCarData = [
     price: '10000000',
     manufacturer: 'Toyota',
     model: 'Avalon',
-    bodytype: 'car',
-    imageurl: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    body_type: 'car',
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
   }
 ];
 
@@ -25,64 +25,64 @@ export const invalidCarData = [
     price: '30000000',
     manufacturer: 'Toyota',
     model: 'Avalon',
-    bodytype: 'car',
-    imageurl: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    body_type: 'car',
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
   },
   {
     state: 'usedd',
     price: '30000000',
     manufacturer: 'Toyota',
     model: 'Avalon',
-    bodytype: 'car',
-    imageurl: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    body_type: 'car',
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
   },
   // price
   {
     state: 'used',
     manufacturer: 'Toyota',
     model: 'Avalon',
-    bodytype: 'car',
-    imageurl: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    body_type: 'car',
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
   },
   {
     state: 'usedd',
     price: '3000ert.',
     manufacturer: 'Toyota',
     model: 'Avalon',
-    bodytype: 'car',
-    imageurl: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    body_type: 'car',
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
   },
   // manufacturer
   {
     state: 'used',
     price: '30000000',
     model: 'Avalon',
-    bodytype: 'car',
-    imageurl: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    body_type: 'car',
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
   },
   {
     state: 'used',
     price: '30000000',
     manufacturer: 'Toyota4',
     model: 'Avalon',
-    bodytype: 'car',
-    imageurl: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    body_type: 'car',
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
   },
   // model
   {
     state: 'new',
     price: '30000000',
     manufacturer: 'Toyota',
-    bodytype: 'car',
-    imageurl: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    body_type: 'car',
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
   },
   {
     state: 'new',
     price: '30000000',
     manufacturer: 'Toyota',
     model: 'Avalon.34',
-    bodytype: 'car',
-    imageurl: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    body_type: 'car',
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
   },
   // bodytype
   {
@@ -90,15 +90,15 @@ export const invalidCarData = [
     price: '30000000',
     manufacturer: 'Toyota',
     model: 'Avalon',
-    imageurl: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
   },
   {
     state: 'used',
     price: '30000000',
     manufacturer: 'Toyota',
     model: 'Avalon',
-    bodytype: 'ca.r',
-    imageurl: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    body_type: 'ca.r',
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
   },
   // imageurl
   {
@@ -106,6 +106,6 @@ export const invalidCarData = [
     price: '30000000',
     manufacturer: 'Toyota',
     model: 'Avalon',
-    bodytype: 'car'
+    body_type: 'car'
   }
 ];

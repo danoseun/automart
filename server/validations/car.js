@@ -1,5 +1,8 @@
+/* eslint-disable camelcase */
 /* eslint-disable prefer-const */
-import { cars } from '../dummyDb';
+import 'dotenv/config';
+import pool from '../config/config';
+import { fetchSingleCarAdQuery } from '../config/sql';
 
 /**
  * Class representing Car validations
@@ -14,7 +17,7 @@ export class CarValidator {
     */
   static postAdchecker(req, res, next) {
     let {
-      state, price, manufacturer, model, bodytype, imageurl
+      state, price, manufacturer, model, body_type, img_url
     } = req.body;
 
     const errors = [];
@@ -43,7 +46,7 @@ export class CarValidator {
       errors.push(error);
     }
     if (price) {
-      price = price.trim();
+      // price = price.trim();
       if (!/^\d+$/.test(price)) {
         const error = {
           message: 'Price should be numbers only'
@@ -86,16 +89,16 @@ export class CarValidator {
       }
     }
 
-    if (!bodytype) {
+    if (!body_type) {
       const error = {
         message: 'You will need to specify a bodytype'
       };
       errors.push(error);
     }
 
-    if (bodytype) {
-      bodytype = bodytype.trim();
-      if (/[^a-zA-Z]/.test(bodytype)) {
+    if (body_type) {
+      body_type = body_type.trim();
+      if (/[^a-zA-Z]/.test(body_type)) {
         const error = {
           message: 'Bodytype field accepts alphabets only'
         };
@@ -103,11 +106,25 @@ export class CarValidator {
       }
     }
 
-    if (!imageurl) {
+    if (!img_url) {
       const error = {
-        message: 'Please upload an image for this vehicle'
+        message: 'You need to upload an image for this car'
       };
       errors.push(error);
+    }
+
+    if (img_url) {
+      let extension;
+      extension = img_url.split('.').pop();
+      extension = extension.replace(/'/g, '').trim();
+      extension = extension.toLowerCase();
+      const validImageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'com'];
+      if (!validImageExtensions.includes(extension)) {
+        const error = {
+          message: 'This image is not a valid image'
+        };
+        errors.push(error);
+      }
     }
 
 
@@ -125,7 +142,8 @@ export class CarValidator {
     req.body.price = price;
     req.body.manufacturer = manufacturer.toLowerCase();
     req.body.model = model.toLowerCase();
-    req.body.bodytype = bodytype.toLowerCase();
+    req.body.body_type = body_type.toLowerCase();
+    req.body.img_url = img_url;
     return next();
   }
 
@@ -136,17 +154,32 @@ export class CarValidator {
    * @param {function} next - Calls the next function/route handler
    * @returns {object} JSON representing the failure message.
    */
-  static findSpecificCarAd(req, res, next) {
+  static async findSpecificCarAd(req, res, next) {
     const { id } = req.params;
-    const value = Number(id);
-    const foundCar = cars.find(car => car.id === value);
-    if (!foundCar) {
-      return res.status(404).json({
-        status: 404,
-        error: 'Car not found'
+    if (/[a-zA-Z]/.test(id)) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Invalid entry'
       });
     }
-    req.body.foundCar = foundCar;
-    return next();
+    const value = Number(id);
+
+    try {
+      const { rows, rowCount } = await pool.query(fetchSingleCarAdQuery, [value]);
+      if (rowCount === 0) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Car not found'
+        });
+      }
+      const foundCar = rows[0];
+      req.body.foundCar = foundCar;
+      next();
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: error.message
+      });
+    }
   }
 }
