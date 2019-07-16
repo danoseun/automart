@@ -41,9 +41,9 @@ export class OrderController {
       const result = await pool.query(postOrderQuery, [buyer, value, amount]);
       if (result.rowCount !== 0) {
         const price = rows[0].price;
-        const {
-          // eslint-disable-next-line no-shadow
+        // eslint-disable-next-line no-shadow
           // eslint-disable-next-line no-unused-vars
+        const {
           id, buyer_id, car_id, amount, status, created_on
         } = result.rows[0];
 
