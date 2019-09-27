@@ -150,4 +150,3 @@ export const inValidLoginData = [
     password: 'lasiselenu'
   }
 ];
-

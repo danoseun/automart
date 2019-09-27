@@ -6,7 +6,7 @@ export const validCarData = [
     manufacturer: 'Kia',
     model: 'Dehydra',
     body_type: 'car',
-    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    img_url: 'https://res.cloudinary.com/oseun/image/upload/v1559912278/toyota-runner.jpg'
   },
   {
     state: 'used',
@@ -15,7 +15,7 @@ export const validCarData = [
     manufacturer: 'Toyota',
     model: 'Avalon',
     body_type: 'car',
-    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    img_url: 'https://res.cloudinary.com/oseun/image/upload/v1559912278/toyota-runner.jpg'
   }
 ];
 
@@ -26,7 +26,7 @@ export const invalidCarData = [
     manufacturer: 'Toyota',
     model: 'Avalon',
     body_type: 'car',
-    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855.jpeg'
   },
   {
     state: 'usedd',
@@ -34,7 +34,7 @@ export const invalidCarData = [
     manufacturer: 'Toyota',
     model: 'Avalon',
     body_type: 'car',
-    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855.jpg'
   },
   // price
   {
@@ -42,7 +42,7 @@ export const invalidCarData = [
     manufacturer: 'Toyota',
     model: 'Avalon',
     body_type: 'car',
-    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855.jpeg'
   },
   {
     state: 'usedd',
@@ -50,7 +50,7 @@ export const invalidCarData = [
     manufacturer: 'Toyota',
     model: 'Avalon',
     body_type: 'car',
-    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855.jpeg'
   },
   // manufacturer
   {
@@ -58,7 +58,7 @@ export const invalidCarData = [
     price: '30000000',
     model: 'Avalon',
     body_type: 'car',
-    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855.jpeg'
   },
   {
     state: 'used',
@@ -66,7 +66,7 @@ export const invalidCarData = [
     manufacturer: 'Toyota4',
     model: 'Avalon',
     body_type: 'car',
-    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    img_url: 'https://res.cloudinary.com/oseun/image/upload/v1559912278/toyota-runner.jpg'
   },
   // model
   {
@@ -74,7 +74,7 @@ export const invalidCarData = [
     price: '30000000',
     manufacturer: 'Toyota',
     body_type: 'car',
-    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    img_url: 'https://res.cloudinary.com/oseun/image/upload/v1559912278/toyota-runner.jpg'
   },
   {
     state: 'new',
@@ -82,7 +82,7 @@ export const invalidCarData = [
     manufacturer: 'Toyota',
     model: 'Avalon.34',
     body_type: 'car',
-    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    img_url: 'https://res.cloudinary.com/oseun/image/upload/v1559912278/toyota-runner.jpg'
   },
   // bodytype
   {
@@ -90,7 +90,7 @@ export const invalidCarData = [
     price: '30000000',
     manufacturer: 'Toyota',
     model: 'Avalon',
-    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    img_url: 'https://res.cloudinary.com/oseun/image/upload/v1559912278/toyota-runner.jpg'
   },
   {
     state: 'used',
@@ -98,7 +98,7 @@ export const invalidCarData = [
     manufacturer: 'Toyota',
     model: 'Avalon',
     body_type: 'ca.r',
-    img_url: 'https://www.cloudinary.com/photo/yellow-sports-car-during-day-time-39855/'
+    img_url: 'https://res.cloudinary.com/oseun/image/upload/v1559912278/toyota-runner.jpg'
   },
   // imageurl
   {

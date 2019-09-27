@@ -3,7 +3,7 @@ export const createUser = 'INSERT INTO users (email, first_name, last_name, pass
 export const fetchAllUsersQuery = 'SELECT * FROM users';
 export const deleteUserQuery = 'DELETE FROM users WHERE email = $1';
 export const queryUsersByEmail = 'SELECT * FROM users WHERE email = $1';
-export const updateUserRoleQuery = 'UPDATE users SET is_admin = $1 WHERE email = $2';
+export const updateUserRoleQuery = 'UPDATE users SET is_admin = $1 WHERE email = $2 returning *';
 
 /** Car SQL */
 export const postAdQuery = 'INSERT INTO cars (owner, state, price, manufacturer, model, body_type, img_url) VALUES ($1, $2, $3, $4, $5, $6, $7) returning *';

@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { hashSync, compareSync } from 'bcrypt';
-import pool from '../config/config';
+import db from '../config/index';
 import { createToken } from '../middlewares/auth';
 // import { sendMail } from '../helpers/mail';
 // import  Crypter  from '../helpers/crypt';
@@ -36,7 +36,7 @@ export class UserController {
     ];
 
     try {
-      const { rows } = await pool.query(createUser, params);
+      const { rows } = await db.query(createUser, params);
       if (rows) {
         const authUser = rows[0];
         const token = createToken(authUser);
@@ -65,7 +65,7 @@ export class UserController {
     const { email } = req.body;
     const params = [email];
     try {
-      const { rows } = await pool.query(queryUsersByEmail, params);
+      const { rows } = await db.query(queryUsersByEmail, params);
       if (rows) {
         if (rows[0]) {
           const comparePassword = compareSync(req.body.password, rows[0].password);

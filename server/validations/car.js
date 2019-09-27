@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable prefer-const */
 import 'dotenv/config';
-import pool from '../config/config';
+import db from '../config/index';
 import { fetchSingleCarAdQuery } from '../config/sql';
 
 /**
@@ -46,7 +46,7 @@ export class CarValidator {
       errors.push(error);
     }
     if (price) {
-      // price = price.trim();
+      price = price.trim();
       if (!/^\d+$/.test(price)) {
         const error = {
           message: 'Price should be numbers only'
@@ -118,7 +118,7 @@ export class CarValidator {
       extension = img_url.split('.').pop();
       extension = extension.replace(/'/g, '').trim();
       extension = extension.toLowerCase();
-      const validImageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'com'];
+      const validImageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
       if (!validImageExtensions.includes(extension)) {
         const error = {
           message: 'This image is not a valid image'
@@ -165,7 +165,7 @@ export class CarValidator {
     const value = Number(id);
 
     try {
-      const { rows, rowCount } = await pool.query(fetchSingleCarAdQuery, [value]);
+      const { rows, rowCount } = await db.query(fetchSingleCarAdQuery, [value]);
       if (rowCount === 0) {
         return res.status(404).json({
           status: 404,
