@@ -26,7 +26,7 @@ describe('Create token for user', () => {
     userClaim = res.body.data.token;
     console.log('A', userClaim);
   });
-  console.log('B', userClaim);
+
 
   it('Should create token for admin after successful login', async () => {
     const res = await chai.request(app)
@@ -40,8 +40,6 @@ describe('Create token for user', () => {
     console.log('A', adminToken);
   });
 
-  console.log('B', adminToken);
-
   it('Should create token for owner after successful login', async () => {
     const res = await chai.request(app)
       .post('/api/v1/auth/signin')
@@ -54,7 +52,7 @@ describe('Create token for user', () => {
     console.log('A', ownerClaim);
   });
 });
-console.log('B', ownerClaim);
+
 
 describe('Test for Cars routes', () => {
   describe('Test for postAd route', () => {
