@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable camelcase */
 /* eslint-disable prefer-destructuring */
-import pool from '../config/config';
+import db from '../config/index';
 import {
   postOrderQuery, findOrderQuery, updateOrderQuery, allUserOrdersQuery, fetchSingleCarAdQuery
 } from '../config/sql';
@@ -20,30 +20,32 @@ export class OrderController {
    */
   static async postOrder(req, res) {
     const { car_id, amount } = req.body;
+    
     const buyer = req.authData.payload.id;
     const value = Number(car_id);
 
     // user should not be able to buy car/Ad he/she posted
     try {
-      const { rows, rowCount } = await pool.query(fetchSingleCarAdQuery, [value]);
+      const { rows, rowCount } = await db.query(fetchSingleCarAdQuery, [value]);
       if (rowCount === 0) {
         return res.status(404).json({
           status: 404,
           error: 'Invalid car id'
         });
       }
-      // if (rows[0].owner === buyer) {
-      //   return res.status(401).json({
-      //     status: 401,
-      //     error: 'You can not order for a car you posted'
-      //   });
-      // }
-      const result = await pool.query(postOrderQuery, [buyer, value, amount]);
+      if (rows[0].owner === buyer) {
+        return res.status(401).json({
+          status: 401,
+          error: 'You can not order for a car you posted'
+        });
+      }
+      const result = await db.query(postOrderQuery, [buyer, value, amount]);
+      // console.log('result', result.rows[0]);
       if (result.rowCount !== 0) {
         const price = rows[0].price;
+        // eslint-disable-next-line no-shadow
+        // eslint-disable-next-line no-unused-vars
         const {
-          // eslint-disable-next-line no-shadow
-          // eslint-disable-next-line no-unused-vars
           id, buyer_id, car_id, amount, status, created_on
         } = result.rows[0];
 
@@ -91,7 +93,7 @@ export class OrderController {
     const value = Number(req.params.orderId);
     const { id } = req.authData.payload;
     try {
-      const { rows, rowCount } = await pool.query(findOrderQuery, [value, id]);
+      const { rows, rowCount } = await db.query(findOrderQuery, [value, id]);
       if (rowCount === 0) {
         return res.status(404).json({
           status: 404,
@@ -106,7 +108,7 @@ export class OrderController {
         });
       }
       if (rowCount !== 0 && rows[0].status === 'pending') {
-        const result = await pool.query(updateOrderQuery, [price, value, id]);
+        const result = await db.query(updateOrderQuery, [price, value, id]);
         if (result.rowCount !== 0) {
           const { id, car_id, status } = result.rows[0];
           new_price_offered = price;

@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import validator from 'validatorjs';
-import pool from '../config/config';
+import db from '../config/index';
 import { queryUsersByEmail } from '../config/sql';
 
 /**
@@ -38,7 +38,7 @@ export class UserValidator {
     }
     email = email.toLowerCase().trim();
     try {
-      const { rows } = await pool.query(queryUsersByEmail, [email]);
+      const { rows } = await db.query(queryUsersByEmail, [email]);
       if (rows[0]) {
         return res.status(409).json({
           status: 409,
@@ -84,7 +84,7 @@ export class UserValidator {
 
     email = email.toLowerCase().trim();
     try {
-      const { rows } = await pool.query(queryUsersByEmail, [email]);
+      const { rows } = await db.query(queryUsersByEmail, [email]);
       if (!rows[0]) {
         return res.status(401).json({
           status: 401,

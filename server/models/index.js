@@ -13,7 +13,6 @@ import createFlagsTable from './flag';
     await createOrdersTable();
     await createFlagsTable();
   } catch (error) {
-    
     console.log(error);
   }
 })();

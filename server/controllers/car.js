@@ -3,7 +3,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-undef */
 /* eslint-disable prefer-const */
-import pool from '../config/config';
+import db from '../config/index';
 import {
   postAdQuery, fetchAllCarAdsQuery, allUserAdsQuery, deleteSingleAdQuery, updateCarAdStatus, updateCarAdPrice, statusQuery, statusPriceQuery, statusManufacturerQuery, bodyTypeQuery, statusStateQuery, queryUsersByEmail
 } from '../config/sql';
@@ -40,7 +40,7 @@ export class CarController {
       ];
 
 
-      const { rows } = await pool.query(postAdQuery, params);
+      const { rows } = await db.query(postAdQuery, params);
       const {
         id, owner, state, status, price, manufacturer, model, body_type, img_url, created_on
       } = rows[0];
@@ -84,7 +84,7 @@ export class CarController {
   */
   static async fetchAllCarAds(req, res) {
     try {
-      const { rows } = await pool.query(fetchAllCarAdsQuery);
+      const { rows } = await db.query(fetchAllCarAdsQuery);
       return res.status(200).json({
         status: 200,
         data: rows
@@ -140,7 +140,7 @@ export class CarController {
     const { foundCar } = req.body;
 
     try {
-      const { rowCount } = await pool.query(deleteSingleAdQuery, [foundCar.id]);
+      const { rowCount } = await db.query(deleteSingleAdQuery, [foundCar.id]);
       if (rowCount !== 0) {
         return res.status(200).json({
           status: 200,
@@ -170,7 +170,7 @@ export class CarController {
 
     if (foundCar.status === 'unsold') {
       try {
-        const { rows, rowCount } = await pool.query(updateCarAdStatus, ['sold', foundCar.id, id]);
+        const { rows, rowCount } = await db.query(updateCarAdStatus, ['sold', foundCar.id, id]);
         if (rowCount !== 0) {
           return res.status(200).json({
             status: 200,
@@ -221,7 +221,7 @@ export class CarController {
       }
     }
     try {
-      const { rows, rowCount } = await pool.query(updateCarAdPrice, [price, foundCar.id, id]);
+      const { rows, rowCount } = await db.query(updateCarAdPrice, [price, foundCar.id, id]);
       if (rowCount !== 0) {
         return res.status(200).json({
           status: 200,
@@ -256,7 +256,7 @@ export class CarController {
       let { status } = req.query;
       status = status.trim().toLowerCase();
       try {
-        const { rows, rowCount } = await pool.query(statusQuery, ['unsold']);
+        const { rows, rowCount } = await db.query(statusQuery, ['unsold']);
         if (rowCount === 0) {
           return res.status(404).json({
             status: 404,
@@ -296,7 +296,7 @@ export class CarController {
       console.log('here');
       status = status.trim().toLowerCase();
       try {
-        const { rows, rowCount } = await pool.query(statusPriceQuery, ['unsold', minprice, maxprice]);
+        const { rows, rowCount } = await db.query(statusPriceQuery, ['unsold', minprice, maxprice]);
         console.log(rowCount);
         if (rowCount === 0) {
           return res.status(404).json({
@@ -335,7 +335,7 @@ export class CarController {
       status = status.trim().toLowerCase();
       state = state.trim().toLowerCase();
       try {
-        const { rows, rowCount } = await pool.query(statusStateQuery, ['unsold', 'new']);
+        const { rows, rowCount } = await db.query(statusStateQuery, ['unsold', 'new']);
         console.log('i tire', rows);
         if (rowCount === 0) {
           return res.status(404).json({
@@ -374,7 +374,7 @@ export class CarController {
       status = status.trim().toLowerCase();
       state = state.trim().toLowerCase();
       try {
-        const { rows, rowCount } = await pool.query(statusStateQuery, ['unsold', 'used']);
+        const { rows, rowCount } = await db.query(statusStateQuery, ['unsold', 'used']);
         if (rowCount === 0) {
           return res.status(404).json({
             status: 404,
@@ -412,7 +412,7 @@ export class CarController {
       status = status.trim().toLowerCase();
       manufacturer = manufacturer.trim().toLowerCase();
       try {
-        const { rows, rowCount } = await pool.query(statusManufacturerQuery, ['unsold', manufacturer]);
+        const { rows, rowCount } = await db.query(statusManufacturerQuery, ['unsold', manufacturer]);
         if (rowCount === 0) {
           return res.status(404).json({
             status: 404,
@@ -450,7 +450,7 @@ export class CarController {
       body_type = body_type.trim().toLowerCase();
 
       try {
-        const { rows, rowCount } = await pool.query(bodyTypeQuery, [body_type]);
+        const { rows, rowCount } = await db.query(bodyTypeQuery, [body_type]);
         if (rowCount === 0) {
           return res.status(404).json({
             status: 404,

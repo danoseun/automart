@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import app from '../../app';
 
 import { validOrderData, invalidOrderData } from './mockData/order';
-import { orders } from '../dummyDb';
+// import { orders } from '../dummyDb';
 
 const { should, expect } = chai;
 should();
@@ -15,7 +15,7 @@ let userClaim;
 describe('Create token for user', () => {
   it('Should create token after successful login', async () => {
     const res = await chai.request(app)
-      .post('/api/v1/auth/login')
+      .post('/api/v1/auth/signin')
       .send({
         email: 'iknagod@gmail.com',
         password: 'jamespass'
@@ -29,7 +29,6 @@ describe('Create token for user', () => {
 describe('Test for Orders routes', () => {
   describe('Test for postOrder route', () => {
     it('Should return 201 status code and post order', async () => {
-      const newLength = orders.length + 1;
       const res = await chai.request(app)
         .post('/api/v1/order')
         .set('authorization', userClaim)
@@ -38,7 +37,6 @@ describe('Test for Orders routes', () => {
       res.body.should.be.an('object');
       expect(res.body.status).to.equal(201);
       expect(res.body.data).to.be.a('object');
-      expect(orders).to.have.length(newLength);
     });
     it('Should return 400 status code and not post order', async () => {
       const res = await chai.request(app)

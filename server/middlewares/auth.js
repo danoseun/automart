@@ -11,19 +11,19 @@ export const createToken = (payload) => {
 };
 
 export const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization;
+  const token = req.headers.authorization || req.body.token;
   if (!token) {
     return res.status(403).json({
-      status: 403,
-      error: 'No token supplied'
+      error: '403',
+      message: 'No token supplied'
     });
   }
-  jwt.verify(token.split('Bearer ')[1], process.env.SECRETKEY, (error, authData) => {
+  jwt.verify(token, process.env.SECRETKEY, (error, authData) => {
     if (error) {
       if (error.message.includes('signature')) {
         return res.status(403).json({
-          status: 403,
-          error: 'Invalid token supplied'
+          error: 403,
+          message: 'Invalid token supplied'
         });
       }
       return res.status(403).json({
@@ -38,7 +38,7 @@ export const verifyToken = (req, res, next) => {
 
 export const isAdmin = (req, res, next) => {
   const { is_admin } = req.authData.payload;
-  if (is_admin === true || is_admin === false) {
+  if (is_admin === true) {
     return next();
   }
 

@@ -13,7 +13,7 @@ const flagsTable = `DROP TABLE IF EXISTS flags CASCADE;
     )`;
 
 /**
-         * Function representing usertableHandler
+         * Function representing flagtableHandler
          * @returns {object} representing success or failure
 */
 export default async function createFlagsTable() {

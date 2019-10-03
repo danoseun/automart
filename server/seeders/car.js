@@ -1,7 +1,8 @@
-import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import format from 'pg-format';
 import pool from '../config/config';
+
+dotenv.config();
 
 const ownerOne = Number(process.env.AFFICHE_UNO);
 const ownerTwo = Number(process.env.AFFICHE_TROIS);
